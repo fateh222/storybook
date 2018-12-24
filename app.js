@@ -9,8 +9,8 @@ const session = require('express-session');
 const passport = require('passport');
 
 // Load Models
-require('./models/User');
-require('./models/Story');
+require('./app/models/User');
+require('./app/models/Story');
 
 // Passport Config
 require('./config/passport')(passport);
@@ -30,7 +30,7 @@ const {
   formatDate,
   select,
   editIcon
-} = require('./helpers/hbs');
+} = require('./app/helpers/hbs');
 
 // Map global promises
 mongoose.Promise = global.Promise;
@@ -82,6 +82,8 @@ app.use((req, res, next) => {
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'app')));
+app.use(express.static(path.join(__dirname, 'app/assets')));
 
 // Use Routes
 app.use('/', index);
