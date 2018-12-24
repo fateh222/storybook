@@ -7,9 +7,9 @@
       <ul class="right hide-on-small-only">
         {{#if user}}
         <li><a href="/dashboard">Welcome {{user.firstName}}</a></li>
-        <li><a href="/auth/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+        <li><a href="/auth/logout" class="tooltipped" data-position="bottom" data-tooltip="Logout" ><i class="fas fa-sign-out-alt"></i></a></li>
         {{else}}
-        <li><a href="/stories"><i class="fa fa-book"></i> Public Stories</a></li>
+        <li><a href="/stories"><i class="fas fa-book"></i> Public Stories</a></li>
         {{/if}}
       </ul>
       <!-- SIDE MENU -->
@@ -17,15 +17,15 @@
         {{#if user}}
         {{else}}
         <li>
-          <a class="btn red darken-1" href="/auth/google"><i class="fa fa-google left"></i> Login With Google</a>
+          <a class="btn red darken-1" href="/auth/google"><i class="fab fa-google"></i> Login With Google</a>
         </li>
         {{/if}}
-        <li><a href="/stories"><i class="fa fa-book"></i> Public Stories</a></li>
+        <li><a href="/stories"><i class="fas fa-book"></i> Public Stories</a></li>
         {{#if user}}
         <li class="divider"></li>
-        <li><a href="/dashboard"><i class="fa fa-cog"></i> Dashboard</a></li>
-        <li><a href="/stories/my"><i class="fa fa-user"></i> My Stories</a></li>
-        <li><a href="/auth/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+        <li><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li><a href="/stories/my"><i class="fas fa-user"></i> My Stories</a></li>
+        <li><a href="/auth/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         {{/if}}
       </ul>
     </div>

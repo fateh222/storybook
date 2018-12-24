@@ -17,11 +17,11 @@
           <td>{{formatDate data 'MMMM do YYYY'}}</td>
           <td><span class="dash-status">{{status}}</span></td>
           <td>
-            <a class="btn left-align" href="/stories/edit/{{id}}"><i class="fa fa-pencil"></i> Edit</a>
-
+            <a class="btn-floating  waves-effect waves-light grey tooltipped" href="/stories/show/{{id}}" data-position="bottom" data-tooltip="Show"><i class="fas fa-eye" style= "font-size: 1rem !important;"></i></a>
+            <a class="btn-floating  waves-effect waves-light grey tooltipped" href="/stories/edit/{{id}}" data-position="bottom" data-tooltip="Edit"><i class="fas fa-pencil-alt" style= "font-size: 1rem !important;" ></i></a>
             <form action="/stories/{{id}}?_method=DELETE" method="post" id="delete-form">
               <input type="hidden" name="_method" value="DELETE">
-              <button type="submit" class="btn red"><i class="fa fa-remove"></i> Delete</button>
+              <button type="submit" class="btn-floating waves-effect red tooltipped" data-position="bottom" data-tooltip="Delete"><i class="fa fa-remove" style="font-size: 1rem !important;"></i> Delete</button>
             </form>
           </td>
         </tr>

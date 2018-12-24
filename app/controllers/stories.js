@@ -41,6 +41,7 @@ stories.create = (req, res) => {
   new Story(newStory)
     .save()
     .then(story => {
+      req.flash('success_msg', 'Story added');
       res.redirect(`/stories/show/${story.id}`);
     });
 }
@@ -67,6 +68,7 @@ stories.update = (req, res) => {
 
     story.save()
       .then(story => {
+        req.flash('success_msg', 'Story updated');
         res.redirect('/dashboard');
       });
   });
@@ -76,6 +78,7 @@ stories.update = (req, res) => {
 stories.delete = (req, res) => {
   Story.remove({_id: req.params.id})
     .then(() => {
+      req.flash('success_msg', 'Story deleted');
       res.redirect('/dashboard');
     });
 }

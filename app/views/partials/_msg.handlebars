@@ -1,0 +1,15 @@
+<div id="alert_msg">
+  {{#if success_msg}}
+    <div class="materialert success">
+      <div class="material-icons">check</div>
+      {{success_msg}}  &nbsp;<i class="fas fa-smile"></i>
+    </div>
+  {{/if}}
+
+  {{#if error_msg}}
+    <div class="materialert error">
+      <div class="material-icons">error_outline</div>
+      {{error_msg}}  &nbsp;<i class="fas fa-frown"></i>
+    </div>
+  {{/if}}
+</div>
