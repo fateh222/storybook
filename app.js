@@ -51,6 +51,7 @@ app.use(bodyParser.json())
 app.use(methodOverride('_method'));
 
 // Handlebars Middleware
+app.set('views', path.join(__dirname, './app/views'));
 app.engine('handlebars', exphbs({
   helpers: {
     truncate: truncate,
@@ -59,9 +60,13 @@ app.engine('handlebars', exphbs({
     select:select,
     editIcon: editIcon
   },
-  defaultLayout:'main'
+  defaultLayout:'main',
+  layoutsDir:'./app/views/layouts',
+  partialsDir:'./app/views/partials'
+
 }));
 app.set('view engine', 'handlebars');
+
 
 app.use(cookieParser());
 app.use(session({
