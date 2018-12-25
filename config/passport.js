@@ -157,7 +157,8 @@ strategies.twitter = function(passport){
   passport.use(new TwitterStrategy({
     consumerKey: keys.twitterKey,
     consumerSecret: keys.twitterSecret,
-    callbackURL: "/auth/twitter/callback"
+    callbackURL: "/auth/twitter/callback",
+    proxy: true
   },
   function(token, tokenSecret, profile, done) {
     image = profile.photos ? profile.photos[0].value : '/images/user.jpeg'
