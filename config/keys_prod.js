@@ -7,4 +7,6 @@ module.exports = {
   facebookAppSecret: process.env.FACEBOOK_APP_SECRET,
   linkedinClientID: process.env.LINKEDIN_CLIENT_ID,
   linkedinClientSecret: process.env.LINKEDIN_CLIENT_SECRET,
+  twitterKey: process.env.TWITTER_KEY,
+  twitterSecret: process.env.TWITTER_SECRET,
 }

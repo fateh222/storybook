@@ -37,6 +37,19 @@ router.get('/linkedin/callback',
   }
 );
 
+// Login with Twitter
+router.get('/twitter',
+  passport.authenticate('twitter'));
+
+router.get('/twitter/callback',
+  passport.authenticate('twitter', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/login'
+  }), (req, res) => {
+    res.redirect('/dashboard');
+  });
+
+
 router.get('/verify', (req, res) => {
   if(req.user){
     console.log(req);

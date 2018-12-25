@@ -1,6 +1,7 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
+const TwitterStrategy = require('passport-twitter').Strategy;
 
 const mongoose = require('mongoose');
 const keys = require('./keys');
@@ -106,7 +107,7 @@ strategies.facebook = function(passport) {
 }
 
 // linkedin strategy
-strategies.linkedin =function(passport){
+strategies.linkedin = function(passport){
   passport.use(new LinkedInStrategy({
     clientID: keys.linkedinClientID,
     clientSecret: keys.linkedinClientSecret,
@@ -140,7 +141,59 @@ strategies.linkedin =function(passport){
       }
     })
   }));
+
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser((id, done) => {
+    User.findById(id).then(user => done(null, user));
+  });
 }
 
+// twitter strategy
+strategies.twitter = function(passport){
+
+  passport.use(new TwitterStrategy({
+    consumerKey: keys.twitterKey,
+    consumerSecret: keys.twitterSecret,
+    callbackURL: "/auth/twitter/callback"
+  },
+  function(token, tokenSecret, profile, done) {
+    image = profile.photos ? profile.photos[0].value : '/images/user.jpeg'
+    const newUser = {
+      socialID: profile.id,
+      firstName: profile.name.givenName,
+      lastName: profile.name.familyName,
+      displayName: profile.displayName,
+      email: profile.emails[0].value,
+      image: image
+    }
+
+    // Check for existing user
+    User.findOne({
+      socialID: profile.id
+    }).then(user => {
+      if(user){
+        // Return user
+        done(null, user);
+      } else {
+        // Create user
+        new User(newUser)
+          .save()
+          .then(user => done(null, user));
+      }
+    })
+  }
+));
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id).then(user => done(null, user));
+});
+}
 
 module.exports = strategies;
