@@ -35,7 +35,13 @@
             <div class="chip">
               <img src="{{commentUser.image}}">
               <a href="/stories/user/{{commentUser.id}}">
-              {{commentUser.firstName}} {{commentUser.lastName}}
+              {{#if commentUser.firstName}}
+                {{commentUser.firstName}} {{commentUser.lastName}}
+              {{else if commentUser.displayName}}
+                {{commentUser.displayName}}
+              {{else}}
+                {{commentUser.email}}
+              {{/if}}
               </a>
             </div>
             <br>

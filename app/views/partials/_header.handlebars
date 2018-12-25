@@ -6,7 +6,18 @@
       <!-- RIGHT NAV -->
       <ul class="right hide-on-small-only">
         {{#if user}}
-        <li><a href="/dashboard">Welcome {{user.firstName}}</a></li>
+        <li>
+          <a href="/dashboard">
+            Welcome
+            {{#if user.firstName}}
+              {{user.firstName}}
+            {{else if user.displayName}}
+              {{user.displayName}}
+            {{else}}
+              {{user.email}}
+            {{/if}}
+          </a>
+        </li>
         <li><a href="/auth/logout" class="tooltipped" data-position="bottom" data-tooltip="Logout" ><i class="fas fa-sign-out-alt"></i></a></li>
         {{else}}
         <li><a href="/stories" class="tooltipped" data-position="bottom" data-tooltip="Public Stories"><i class="fas fa-book"></i></a></li>

@@ -14,7 +14,15 @@
           <br>
           <div class="chip">
             <img src="{{user.image}}">
-            <a href="/stories/user/{{user.id}}">{{user.firstName}} {{user.lastName}}</a>
+            <a href="/stories/user/{{user.id}}">
+              {{#if user.firstName}}
+                {{user.firstName}} {{user.lastName}}
+              {{else if user.displayName}}
+                {{user.displayName}}
+              {{else}}
+                {{user.email}}
+              {{/if}}
+            </a>
           </div>
         </div>
         <div class="card-action center-align">

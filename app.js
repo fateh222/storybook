@@ -14,7 +14,8 @@ require('./app/models/User');
 require('./app/models/Story');
 
 // Passport Config
-require('./config/passport')(passport);
+require('./config/passport').google(passport);
+require('./config/passport').facebook(passport);
 
 // Load Routes
 const index = require('./routes/index');
