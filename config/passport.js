@@ -1,5 +1,7 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
+
 const mongoose = require('mongoose');
 const keys = require('./keys');
 // Load user model
@@ -23,7 +25,7 @@ strategies.google =function(passport){
       const image = profile.photos[0].value.substring(0, profile.photos[0].value.indexOf('?'));
 
       const newUser = {
-        googleID: profile.id,
+        socialID: profile.id,
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
         displayName: profile.displayName,
@@ -33,7 +35,7 @@ strategies.google =function(passport){
 
       // Check for existing user
       User.findOne({
-        googleID: profile.id
+        socialID: profile.id
       }).then(user => {
         if(user){
           // Return user
@@ -69,7 +71,7 @@ strategies.facebook = function(passport) {
     }, (accessToken, refreshToken, profile, done) => {
       image = profile.photos ? profile.photos[0].value : '/images/user.jpeg'
       const newUser = {
-        googleID: profile.id,
+        socialID: profile.id,
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
         displayName: profile.displayName,
@@ -79,11 +81,10 @@ strategies.facebook = function(passport) {
 
       // Check for existing user
       User.findOne({
-        facebookID: profile.id
+        socialID: profile.id
       }).then(user => {
         if(user){
           // Return user
-          console.log(user);
           done(null, user);
         } else {
           // Create user
@@ -103,4 +104,42 @@ strategies.facebook = function(passport) {
     User.findById(id).then(user => done(null, user));
   });
 }
+
+// linkedin strategy
+strategies.linkedin =function(passport){
+  passport.use(new LinkedInStrategy({
+    clientID: keys.linkedinClientID,
+    clientSecret: keys.linkedinClientSecret,
+    callbackURL: "/auth/linkedin/callback",
+    scope: ['r_emailaddress', 'r_basicprofile'],
+  },
+  (accessToken, refreshToken, profile, done) => {
+    image = profile.photos ? profile.photos[0].value : '/images/user.jpeg'
+    const newUser = {
+      socialID: profile.id,
+      firstName: profile.name.givenName,
+      lastName: profile.name.familyName,
+      displayName: profile.displayName,
+      email: profile.emails[0].value,
+      image: image
+    }
+
+    // Check for existing user
+    User.findOne({
+      socialID: profile.id
+    }).then(user => {
+      if(user){
+        // Return user
+        done(null, user);
+      } else {
+        // Create user
+        new User(newUser)
+          .save()
+          .then(user => done(null, user));
+      }
+    })
+  }));
+}
+
+
 module.exports = strategies;
