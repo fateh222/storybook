@@ -64,7 +64,8 @@ strategies.facebook = function(passport) {
       clientID: keys.facebookAppID,
       clientSecret: keys.facebookAppSecret,
       callbackURL: "/auth/facebook/callback",
-      profileFields: ['id', 'displayName', 'email', 'picture.type(large)']
+      profileFields: ['id', 'displayName', 'email', 'picture.type(large)'],
+      proxy: true
     }, (accessToken, refreshToken, profile, done) => {
       image = profile.photos ? profile.photos[0].value : '/images/user.jpeg'
       const newUser = {
