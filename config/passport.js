@@ -159,15 +159,15 @@ strategies.twitter = function(passport){
     consumerSecret: keys.twitterSecret,
     callbackURL: "/auth/twitter/callback",
     proxy: true
-  },
-  function(token, tokenSecret, profile, done) {
+  }, (token, tokenSecret, profile, done)=> {
+    console.log(profile);
     image = profile.photos ? profile.photos[0].value : '/images/user.jpeg'
     const newUser = {
       socialID: profile.id,
-      firstName: profile.name.givenName,
-      lastName: profile.name.familyName,
+      // firstName: profile.name.givenName,
+      // lastName: profile.name.familyName,
       displayName: profile.displayName,
-      email: profile.emails[0].value,
+      email: profile.emails ? profile.emails[0].value : "unknown@email.com",
       image: image
     }
 
@@ -185,16 +185,16 @@ strategies.twitter = function(passport){
           .then(user => done(null, user));
       }
     })
-  }
-));
+  }));
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
 
-passport.deserializeUser((id, done) => {
-  User.findById(id).then(user => done(null, user));
-});
+  passport.deserializeUser((id, done) => {
+    User.findById(id).then(user => done(null, user));
+  });
 }
+
 
 module.exports = strategies;
