@@ -112,6 +112,7 @@ strategies.linkedin =function(passport){
     clientSecret: keys.linkedinClientSecret,
     callbackURL: "/auth/linkedin/callback",
     scope: ['r_emailaddress', 'r_basicprofile'],
+    proxy: true
   },
   (accessToken, refreshToken, profile, done) => {
     image = profile.photos ? profile.photos[0].value : '/images/user.jpeg'
